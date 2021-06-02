@@ -34,10 +34,10 @@ In this project, you will consider an actual experiment that was run by Udacity.
   - If the student clicks **"start free trial"**, they will be asked to enter their credit card information, and then they will be enrolled in a free trial for the paid version of the course. After 14 days, they will automatically be charged unless they cancel first. 
   - If the student clicks **"access course materials"**, they will be able to view the videos and take the quizzes for free, but they will not receive coaching support or a verified certificate, and they will not submit their final project for feedback.
 
-- **Experiment**: Free Trail Screener
-- **Goal**: Maximize the course completion rate of **"Free Trail"** users through guiding the students who do not have enough time to **"access course materials"**.
+- **Experiment**: Free Trial Screener
+- **Goal**: Maximize the course completion rate of **"Free Trial"** users through guiding the students who do not have enough time to **"access course materials"**.
 - **Experiment Hypothesis**: The hypothesis was that this might set clearer expectations for students upfront, thus reducing the number of frustrated students who left the free trial because they didn't have enough time—without significantly reducing the number of students to continue past the free trial and eventually complete the course. If this hypothesis held true, Udacity could improve the overall student experience and improve coaches' capacity to support students who are likely to complete the course.
-- **Experiment Change**: For the users who click on **"start free trail"**, Udacity will ask the users how much time they are available to devote to the course.
+- **Experiment Change**: For the users who click on **"start free trial"**, Udacity will ask the users how much time they are available to devote to the course.
   - For users who will devote 5 or more hours per week. It's the same as usual.
   - For users who will devote fewer than 5 hours per week, Udacity will suggest the users choose "access course materials"
     ![](https://raw.githubusercontent.com/ZacksAmber/PicGo/master/img/20210525024923.png)
@@ -48,10 +48,10 @@ In this project, you will consider an actual experiment that was run by Udacity.
 - **The Process of Users' Behaviors**:
   1. Visit Udacity website
   2. Open course page (`cookies` or called `pageviews`)
-  3. Choose "start free trail" or "access course materials".
+  3. Choose "start free trial" or "access course materials".
      1. "access course materials"
         1. Free users -> no charging
-     2. "start free trail" (`clicks`)
+     2. "start free trial" (`clicks`)
         1. Fewer than 5 hours per week for learning -> suggested for switching to "access course materials"
         2. 5 hours per week for learning -> stay here (`user-id`)
            1. Course completion & Subscription (`enrollment` & `payment`)
@@ -93,7 +93,7 @@ Any place "unique cookies" are mentioned, the uniqueness is determined by day. (
 - **Number of user-ids**: That is, number of users who enroll in the free trial. ($d_{min}=50$)
 - **Number of clicks**: That is, number of unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). ($d_{min}=240$)
 - **Click-through-probability**: That is, number of unique cookies to click the "Start free trial" button divided by number of unique cookies to view the course overview page. ($d_{min}=0.01$)
-- **Gross conversion**: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. ($d_min=0.01$)
+- **Gross conversion**: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. (${d_min}=0.01$)
 - **Retention**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of user-ids to complete checkout. ($d_{min}=0.01$)
 - **Net conversion**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. ($d_{min}=0.0075$)
 
@@ -110,7 +110,7 @@ You should also decide now what results you will be looking for in order to laun
 - Population sizing metrics, based on your unit of diversion. Your population of control and experiment should be comparable.
 - Actual invariants, those metrics that shouldn’t change when you run your experiment.
 
-The good invariant metrics are the metrics before the **Experiment Change** happens in **The Process of Users' Behaviors**, and the invariant metrics should not changed by any reason including your **Experiment Change**. In this experiment, the **Experiment Change** locates in the step while the users are clicking on "start free trail".
+The good invariant metrics are the metrics before the **Experiment Change** happens in **The Process of Users' Behaviors**, and the invariant metrics should not changed by any reason including your **Experiment Change**. In this experiment, the **Experiment Change** locates in the step while the users are clicking on "start free trial".
 
 |Metric Name|Metric Formula|$d_{min}$|Notation|Python Notation|Reason|
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -375,7 +375,7 @@ The meaning of each column is:
 - **Pageviews**: Number of unique cookies to view the course overview page that day.
 - **Clicks**: Number of unique cookies to click the course overview page that day.
 - **Enrollments**: Number of user-ids to enroll in the free trial that day.
-- **Payments**: Number of user-ids who who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
+- **Payments**: Number of user-ids who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
 
 
 ### Sanity Checks (A/A Test)
@@ -576,4 +576,98 @@ two-tailed
 - $\displaystyle p = \sum_{i \in \mathcal{I}} Pr(X = i) = \sum_{i \in \mathcal{I}} {n \choose i} p^k (1 - p)^{n-i}$
 
 ---
+
+## Make a Recommendation
+
+**Q: Finally, make a recommendation. Would you launch this experiment, not launch it, dig deeper, run a follow-up experiment, or is it a judgment call? If you would dig deeper, explain what area you would investigate. If you would run follow-up experiments, briefIy describe that experiment. If it is a judgment call, explain what factors would be relevant to the decision.**
+
+**A:**
+
+Recall the definitions of the following metrics:
+- **Number of clicks** is the unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). 
+- **Enrollments**: Number of user-ids to enroll in the free trial that day.
+- **Payments**: Number of user-ids who enrolled on that day to remain enrolled for 14 days and thus make a payment. (Note that the date for this column is the start date, that is, the date of enrollment, rather than the date of the payment. The payment happened 14 days later. Because of this, the enrollments and payments are tracked for 14 fewer days than the other columns.)
+
+To be more clear, the **Payments** is included in the **Enrollments**, which means there are two kinds of users:
+- Enrolled in the "start free trial" and make a payment
+- Enrolled in the "start free trial" and do not make a payment
+
+Therefore, if we can reduce the users of enrollments but keep the payments the same. We can assign the coaching services to potential paying users effectively and have the same revenue, leading to an increase in the users experience.
+
+---
+
+Based on our analysis, The Confidence Interval of Gross conversion ($\displaystyle \frac{C_{enrollments}}{C_{clicks}}$) is [-0.0291, -0.012] with a 95% confidence level. And it is statistical significance and practical significance. Therefore, we are 95% confident that after applying the change (asking users who do not have 5 hours for learning per week to switch to "access course materials"), the overall enrollments decreased, which means some users decide not to enroll in the "start free trial". It will help Udacity effectively distribute the human resource to the potential paying users.
+
+Additionally, the Confidence Interval of the Net conversion ($\displaystyle \frac{C_{payments}}{C_{clicks}}$) is [-0.0116, 0.0019] with 95% confidence level. And it neither statistical significance or practical significance. Therefore, we are 95% confident that after applying the change, there is no difference between the control and experiment, which means we stay the payments at the same level but reduce the overall users of "start free trial". Because some users of "start free trial" may not continue to check out. Our target is to suggest this kind of users switch to "access course materials".
+
+---
+
+In conclusion, I recommend launching this change in the production environment. It can help Udacity reach the original goal:
+- Improve the experience of the rest users of "start free trials" since Udacity can distribute the coaching services more efficiently, without significantly reducing the number of students to continue past the free trial and eventually complete the course.
+
+
+Beyond the one goal, there are three extra benefits: 
+- With the users' experience improved, Udacity may attract more potential users.
+- Or Udacity can keep the user experience at the same level and reduce the current coaching teams in order to decrease the cost.
+- The change will not make a directly tremendous impact on the current revenue.
+
+---
+
+## Follow-Up Experiment: How to Reduce Early Cancellations
+
+**Q: If you wanted to reduce the number of frustrated students who cancel early in the course, what experiment would you try? Give a brief description of the change you would make, what your hypothesis would be about the effect of the change, what metrics you would want to measure, and what unit of diversion you would use. Include an explanation of each of your choices.**
+
+**A:**
+
+The potential frustrated students have two categories:
+- Category A: Students who do not finish the prerequisite courses.
+- Category B: Students who have issues but cannot find any help.
+
+`Cancellation rate` definition:
+- `Gross conversion` - `Net conversion`
+
+---
+
+### Experiment 1
+
+For Category A students, Udacity can ask them when they click on "start free trial". This experiment is highly similar to the current experiment.
+
+- **Experiment**: A reminder of prerequisite courses for Free Trial
+- **Goal**: Minimize the course cancellation rate of **"Free Trial"** users by guiding the improper students to the basic course.
+- **Experiment Hypothesis**: The hypothesis was that this might set a clearer entrance for students who are able to finish the courses. For the students who need to finish prerequisite courses, guide them to the basic courses page, leading to a decrease in the number of frustrated students. The `clicks` will be tracked before the "free trial" started. If the experiment hypothesis is true, the experiment will have lower `enrollments`, leading to lower `Gross conversion` and higher `Net conversion`. Therefore, we have lower `Cancellation rate`.
+- **Experiment Change**: For the users who click on **"start free trial"**, Udacity will ask the users whether or not they have enough basic knowledge to complete the course.
+- **Unit of diversion**: cookies
+
+Metrics:
+
+- **Number of cookies**: That is, number of unique cookies to view the course overview page. ($d_{min}=3000$)
+- **Number of user-ids**: That is, number of users who enroll in the free trial. ($d_{min}=50$)
+- **Number of clicks**: That is, number of unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). ($d_{min}=240$)
+- **Click-through-probability**: That is, number of unique cookies to click the "Start free trial" button divided by number of unique cookies to view the course overview page. ($d_{min}=0.01$)
+- **Gross conversion**: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. ($d_min=0.01$)
+- **Retention**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of user-ids to complete checkout. ($d_{min}=0.01$)
+- **Net conversion**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. ($d_{min}=0.0075$)
+
+
+---
+
+### Experiment 2
+
+For Category B students, Udacity can track the students' stats. For instance, make a trigger system that lets the coach contact the students who submit the wrong answers more than three times for the same question.
+
+- **Experiment**: An initiative coaching service for frustrated students
+- **Goal**: Minimize the course cancellation rate of **"Free Trial"** users by providing initiative coaching services to the students.
+- **Experiment Hypothesis**: The hypothesis was that this might set a trigger system for providing initiative coaching services to the students who stuck in the quizzes or assignments. After helping the frustrated students, the course completion rate may be increased. If the hypothesis is true, the experiment will have a higher `Net conversion`. Therefore, we have a lower `Cancellation rate`.
+- **Experiment Change**: For the users who click on **"start free trial"** and have issues, Udacity provides initiative coaching services.
+- **Unit of diversion**: cookies
+
+Metrics:
+
+- **Number of cookies**: That is, number of unique cookies to view the course overview page. ($d_{min}=3000$)
+- **Number of user-ids**: That is, number of users who enroll in the free trial. ($d_{min}=50$)
+- **Number of clicks**: That is, number of unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). ($d_{min}=240$)
+- **Click-through-probability**: That is, number of unique cookies to click the "Start free trial" button divided by number of unique cookies to view the course overview page. ($d_{min}=0.01$)
+- **Gross conversion**: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. ($d_min=0.01$)
+- **Retention**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of user-ids to complete checkout. ($d_{min}=0.01$)
+- **Net conversion**: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. ($d_{min}=0.0075$)
 
